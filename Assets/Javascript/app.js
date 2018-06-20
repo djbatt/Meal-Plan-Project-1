@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    
+    var userIng = [];
 
     var ingredients = [{
             ingredient: "eggs",
@@ -89,16 +91,18 @@ $(document).ready(function(){
             savory: true,
             sweet: false
         }]
-    $(document).on("click", ".ingredient", flavorCheck);
-    // display buttons when displayIngredients is called
+
+    $(document).on("click", ".flavor", displayIngredients);
+    // when we click one of the flavor buttons run displayIngredients
+    // now we need to add a check in displayIngredients to display sweet ingrdients if sweet is pressed, and savory ingredients if savory is pressed
     function displayIngredients() {
+        $("#ingredientColumn").empty(); // clears out buttons before we change flavors!
         for (var i = 0; i < ingredients.length; i++) {
-            var ingBtn = $("<button>");
+            var ingBtn = $("<button>&nbsp");
             ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-primary");
             ingBtn.text(ingredients[i].ingredient);
             $("#ingredientColumn").prepend(ingBtn);
         }
     }
-
-    displayIngredients();
 });
