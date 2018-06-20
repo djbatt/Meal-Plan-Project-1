@@ -1,0 +1,21 @@
+body {
+    background-color: rgb(228, 221, 120); 
+    height: 600px;
+    width: 600px;
+    margin: auto;
+}
+.container1{
+    background-color: blue;
+    width: 800px;
+    height: 500px;
+    margin: auto;
+}
+.container2{
+    background-color: rgb(255, 0, 0);
+    width: 800px;
+    height: 500px;
+    margin: auto;
+}
+.add-btn {
+    background-color: aliceblue;
+}
