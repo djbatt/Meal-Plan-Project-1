@@ -89,13 +89,8 @@ $(document).ready(function(){
             savory: true,
             sweet: false
         }]
-
-    function flavorCheck() {
-        
-    }
-
     $(document).on("click", ".ingredient", flavorCheck);
-
+    // display buttons when displayIngredients is called
     function displayIngredients() {
         for (var i = 0; i < ingredients.length; i++) {
             var ingBtn = $("<button>");
