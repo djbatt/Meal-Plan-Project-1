@@ -1,4 +1,6 @@
 body {
+    font-family: 'Indie Flower', cursive;
     color: #2b2b2b;
     background-color: #f0f0e1;
+    background-image: url(../Images/background1.jpg);
 }
