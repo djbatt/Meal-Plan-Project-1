@@ -3,11 +3,11 @@ $(document).ready(function(){
     var userIng = [];
 
     var ingredients = [{
-            ingredient: "eggs",
+            ingredient: "Eggs",
             savory: true,
             sweet: true
         }, {
-            ingredient: "butter",
+            ingredient: "Butter",
             savory: true,
             sweet: true
         }, {
@@ -43,21 +43,17 @@ $(document).ready(function(){
             savory: true,
             sweet: true
         }, {
-            ingredient: "Tomato",
+            ingredient: "Tomatoes",
             savory: true,
             sweet: false
         }, {
-            ingredient: "Olive",
+            ingredient: "Olives",
             savory: true,
             sweet: false
         }, {
             ingredient: "Beans",
             savory: true,
             sweet: false
-        }, {
-            ingredient: "Peanuts",
-            savory: true,
-            sweet: true
         }, {
             ingredient: "Lettuce",
             savory: true,
@@ -80,10 +76,6 @@ $(document).ready(function(){
             sweet: false
         }, {
             ingredient: "Beef",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Peanuts",
             savory: true,
             sweet: false
         }, {
