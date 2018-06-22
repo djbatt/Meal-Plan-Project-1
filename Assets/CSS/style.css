@@ -4,3 +4,7 @@ body {
     background-color: #f0f0e1;
     background-image: url(../Images/background1.jpg);
 }
+
+.ingredient {
+    margin: 10px;
+}
