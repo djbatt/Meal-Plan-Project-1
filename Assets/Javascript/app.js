@@ -83,12 +83,9 @@ $(document).ready(function(){
             savory: true,
             sweet: false
         }]
+        
     // when we click one of the flavor buttons run displayIngredients
     // now we need to add a check in displayIngredients to display sweet ingrdients if sweet is pressed, and savory ingredients if savory is pressed
-
-    // The target audience is someone who cooks at home regularly, has some ingredients and doesn't want to go and buy more
-    // problem one is saving money, not going out to buy more food
-    // problem two is solving waste, not throwing away food because you don't know what do with it
 
     function displayIngredients() {
         $("#ingredientColumn").empty(); // clears out buttons before we change flavors!
@@ -107,7 +104,7 @@ $(document).ready(function(){
         var targetBtn = $(event.target);
         if (userIng.includes(selectedIng)) {
             console.log(selectedIng.indexOf());
-            userIng.splice(selectedIng.indexOf());
+            userIng.splice(selectedIng.indexOf()); // removing the wrong ingredient i will fix this
             console.log(userIng);
             console.log(selectedIng);
             targetBtn.removeClass("active");
