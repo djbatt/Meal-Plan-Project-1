@@ -14,15 +14,20 @@ var config = {
   };
   firebase.initializeApp(config);
 
+  var database = firebase.database();
 
 //   database.ref().on("value", function (snapshot) {
 
 //     console.log(snapshot.val());
     
  // Change the html to reflect the initial value.
+ 
+
+
 
  $("#sweet").on("click", function () {
-    var ingredients = [{
+
+    database.ref().set([{
         recipeName: "Fast and Delicious Peanut Butter!",
         link: "https://pinchofyum.com/5-minute-homemade-peanut-butter",
         ingredients: ["peanuts"]
@@ -39,9 +44,9 @@ var config = {
         link: "https://www.refinery29.com/2017/02/139786/peanut-butter-scrambled-eggs-review",
         ingredients: ["peanuts", "eggs"]
     }, {
-        recipeName: "Peanut Butter Scramble",
-        link: "https://www.refinery29.com/2017/02/139786/peanut-butter-scrambled-eggs-review",
-        ingredients: ["flour", "eggs"]
+        recipeName: "Make Your Pasta ",
+        link: "http://foodparsed.com/eggless-pasta",
+        ingredients: ["flour"]
     }, {
         ingredient: "Sugar",
         savory: false,
@@ -114,13 +119,8 @@ var config = {
         ingredient: "Peanuts",
         savory: true,
         sweet: false
-    }]
-  var recipeObj = {
-
-      name: "chicken" ,
-      link: "https://pinchofyum.com/5-minute-homemade-peanut-butter",
-      ingredients: "bacon"
-  }
+    }]);
+  
 
 
 

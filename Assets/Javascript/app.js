@@ -87,7 +87,8 @@ $(document).ready(function(){
             savory: true,
             sweet: false
         }]
-        
+ 
+        function flavorCheck()
     // when we click one of the flavor buttons run displayIngredients
     // now we need to add a check in displayIngredients to display sweet ingrdients if sweet is pressed, and savory ingredients if savory is pressed
 
