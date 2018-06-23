@@ -1,122 +1,77 @@
 $(document).ready(function(){
-    
-    var userIng = [];
 
-    var ingredients = [{
-            ingredient: "Eggs",
-            savory: true,
-            sweet: true
-        }, {
-            ingredient: "Butter",
-            savory: true,
-            sweet: true
-        }, {
-            ingredient: "Flour",
-            savory: false,
-            sweet: true
-        }, {
-            ingredient: "Honey",
-            savory: false,
-            sweet: true
-        }, {
-            ingredient: "Sugar",
-            savory: false,
-            sweet: true
-        }, {
-            ingredient: "Baking Soda",
-            savory: false,
-            sweet: true
-        }, {
-            ingredient: "Milk",
-            savory: false,
-            sweet: true
-        }, {
-            ingredient: "Rice",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Pasta",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Bread",
-            savory: true,
-            sweet: true
-        }, {
-            ingredient: "Tomatoes",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Olives",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Beans",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Lettuce",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Eggplant",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Corn",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Carrot",
-            savory: true,
-            sweet: true
-        }, {
-            ingredient: "Potato",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Beef",
-            savory: true,
-            sweet: false
-        }, {
-            ingredient: "Peanuts",
-            savory: true,
-            sweet: false
-        }]
-        
+    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients"
+    
+    var userIngredients = [];
+
+    var ingredients = {
+        meats: ["Chicken", "Pork", "Bacon", "Ground Beef", "Lamb", "Venison", "Turkey", "Fish"],
+        dairy: ["Milk", "Powdered Milk", "Condensed Milk", "Butter", "Heavy Cream", "Almond Milk", "Cheese"],
+        veggies: ["Mushrooms", "Lettuce", "Tomatoes", "Spinach", "Onions", "Garlic", "Potatoes", "Carrots", "Broccoli", "Egg Plant", "Sweet Potatoes", "Corn", "Cucumber"]  
+    }
+
     // when we click one of the flavor buttons run displayIngredients
     // now we need to add a check in displayIngredients to display sweet ingrdients if sweet is pressed, and savory ingredients if savory is pressed
 
     function displayIngredients() {
-        $("#ingredientColumn").empty(); // clears out buttons before we change flavors!
-        for (var i = 0; i < ingredients.length; i++) {
+        for (var i = 0; i < ingredients.meats.length; i++) {
             var ingBtn = $("<button>");
             ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-primary");
-            ingBtn.attr("id", ingredients[i].ingredient);
-            ingBtn.text(ingredients[i].ingredient);
-            $("#ingredientColumn").prepend(ingBtn);
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.meats[i]);
+            ingBtn.text(ingredients.meats[i]);
+            $("#meatColumn").prepend(ingBtn);
+        }
+
+        for (var i = 0; i < ingredients.dairy.length; i++) {
+            var ingBtn = $("<button>");
+            ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.dairy[i]);
+            ingBtn.text(ingredients.dairy[i]);
+            $("#dairyColumn").prepend(ingBtn);
+        }
+
+        for (var i = 0; i < ingredients.veggies.length; i++) {
+            var ingBtn = $("<button>");
+            ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.veggies[i]);
+            ingBtn.text(ingredients.veggies[i]);
+            $("#veggieColumn").prepend(ingBtn);
+        }
+
+        for (var i = 0; i < ingredients.spices.length; i++) {
+            var ingBtn = $("<button>");
+            ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.spices[i]);
+            ingBtn.text(ingredients.spices[i]);
+            $("#spiceColumn").prepend(ingBtn);
         }
     }
 
     function userInput(event) {
+
         var selectedIng = event.target.id;
         var targetBtn = $(event.target);
-        if (userIng.includes(selectedIng)) {
-            console.log(selectedIng.indexOf());
-            userIng.splice(selectedIng.indexOf()); // removing the wrong ingredient i will fix this
-            console.log(userIng);
+        var indexOfIngredient = userIngredients.indexOf(selectedIng);
+
+        if (indexOfIngredient >= 0) {
+            userIngredients.splice(indexOfIngredient, 1);
+            console.log(userIngredients);
             console.log(selectedIng);
             targetBtn.removeClass("active");
             return;
         } else {
-            userIng.push(selectedIng);
-            console.log(userIng);
+            userIngredients.push(selectedIng);
+            console.log(userIngredients);
             console.log(selectedIng);
             targetBtn.addClass("active");
         }
     }
 
-    $(document).on("click", ".flavor", displayIngredients);
+    displayIngredients();
+
     $(document).on("click", ".ingredient", userInput);
 });
