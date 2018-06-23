@@ -9,6 +9,7 @@ $(document).ready(function(){
                     "EggPlant", "Squash", "Sweet Potatoes", "Corn", "Cucumber", "Bell Peppers", "Hot Peppers", "Peas", "Cabbage", "Beets", "Avocado"],
         fruit: ["Apples", "Berries", "Oranges", "Limes", "Lemons", "Grapes", "Bananas", "Coconut", "Pineapple", "Peaches", "Pears", "Kiwis", "Mangoes", "Cherries"],
         pasta: ["Spaghetti", "Penne", "Rigotoni", "BowTie", "Macaroni", "Fetuccine", "Angel Hair", "Rotini", "Lasagna", "Shells", "Linguine", "Orzo", "ziti"],  
+      
     }
 
     // when we click one of the flavor buttons run displayIngredients
@@ -58,6 +59,22 @@ $(document).ready(function(){
             ingBtn.attr("id", ingredients.pasta[i]);
             ingBtn.text(ingredients.pasta[i]);
             $("#pastaColumn").prepend(ingBtn);
+
+            var ingBtn = $("<button>");
+            ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.dairy[i]);
+            ingBtn.text(ingredients.dairy[i]);
+            $("#dairyColumn").prepend(ingBtn);
+        }
+
+        for (var i = 0; i < ingredients.veggies.length; i++) {
+            var ingBtn = $("<button>");
+            ingBtn.addClass("ingredient");
+            ingBtn.addClass("btn btn-lg btn-danger");
+            ingBtn.attr("id", ingredients.veggies[i]);
+            ingBtn.text(ingredients.veggies[i]);
+            $("#veggieColumn").prepend(ingBtn);
         }
     }
 
