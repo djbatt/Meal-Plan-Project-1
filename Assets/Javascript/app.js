@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients"
     
     var userIngredients = [];
 
@@ -40,15 +38,6 @@ $(document).ready(function(){
             ingBtn.text(ingredients.veggies[i]);
             $("#veggieColumn").prepend(ingBtn);
         }
-
-        for (var i = 0; i < ingredients.spices.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.spices[i]);
-            ingBtn.text(ingredients.spices[i]);
-            $("#spiceColumn").prepend(ingBtn);
-        }
     }
 
     function userInput(event) {
@@ -70,8 +59,26 @@ $(document).ready(function(){
             targetBtn.addClass("active");
         }
     }
+    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + "beef" + "&limitLicense=false&number=3&ranking=2"
+
+    function getRecipe() {
+        var config = {
+            beforeSend: function(request) {
+                request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc")
+            },
+            dataType: "json",
+            url: queryUrl,
+            method: "GET",
+        }
+        $.ajax(config)
+        .done(function(response){
+            console.log(response);
+        });
+    }
+
 
     displayIngredients();
+    getRecipe();
 
     $(document).on("click", ".ingredient", userInput);
 });
