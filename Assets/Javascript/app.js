@@ -17,6 +17,7 @@ $(document).ready(function(){
             ingBtn.addClass("ingredient");
             ingBtn.addClass("btn btn-lg btn-danger");
             ingBtn.attr("id", ingredients.meats[i]);
+            console.log("Array Display" + i);
             ingBtn.text(ingredients.meats[i]);
             $("#meatColumn").prepend(ingBtn);
         }
@@ -59,7 +60,7 @@ $(document).ready(function(){
             targetBtn.addClass("active");
         }
     }
-    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + "beef" + "&limitLicense=false&number=3&ranking=2"
+    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + "beef" + "&limitLicense=false&number=5&ranking=2"
 
     function getRecipe() {
         var config = {
@@ -74,8 +75,13 @@ $(document).ready(function(){
         .done(function(response){
             console.log(response);
         });
-    }
 
+    }
+    function showRecipe() {
+        var recipeList = $("<img>");
+        $(".card-img-top").append("<img>" + recipeList.response[0] + "</img>")
+        console.log("")
+    }
 
     displayIngredients();
     getRecipe();
