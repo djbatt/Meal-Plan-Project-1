@@ -1,4 +1,13 @@
 $(document).ready(function(){
+    // functions enables popover
+    $('body').popover({
+        selector: '[data-toggle=popover]',
+        trigger: 'click',
+        html: true,
+        content: function () {
+            return $(this).attr("data-content");
+        }
+    });
     
     var userIngredients = [];
     var queryIngredients;
@@ -91,7 +100,7 @@ $(document).ready(function(){
         // potentionalUrls "https://api.edamam.com/search?q=" + ingredients + "&app_id=$026e5f2d&app_key=$f643c47302976108083824e826b3e4d1"
         // "https://api.edamam.com/api/nutrition-details?app_id=$4313d7cd&app_key=$d3af3a7de5ed75e97f19ca4cea1c7d37" 
         
-
+        var 
         var config = {
             beforeSend: function(request) {
                 request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
@@ -100,6 +109,9 @@ $(document).ready(function(){
             url: ingredientSearchUrl,
             method: "GET",
         }
+        var edamamApi = {
+            
+        }
         $.ajax(config)
         .done(function(response){
             $("#recipeRow").empty();
@@ -107,18 +119,28 @@ $(document).ready(function(){
                 var recipeCard = $("<div>");
                 var recipeBody = $("<div>");
                 var recipeImage = $("<img>");
+                var recipePopover = $("<btn>");
                 recipeImage.attr("src", response[i].image);
                 recipeCard.addClass("card");
                 recipeBody.addClass("card-body");
                 recipeBody.append("<h3 class='card-title'>" + response[i].title + "</h3> <h4 class='card-title'> Missing Ingredients: " + response[i].missedIngredientCount + "</h4>")
                 recipeCard.append(recipeImage);
+                recipePopover.attr("data-toggle", "popover");
+                recipePopover.attr("data-content", response[i].recipe);
+                recipePopover.addClass("btn btn-lg btn-danger");
+                recipeBody.append(recipePopover);
                 recipeCard.append(recipeBody);
                 $("#recipeRow").prepend(recipeCard);
             }
             console.log(response);
         });
+        
+        function showPopover(){ // button remains hidden
+            var unload = [];
+        }
     }
     displayIngredients();
     $(document).on("click", "#ingredientSearch", getRecipe);
+    
     $(document).on("click", ".ingredient", userInput);
 });
