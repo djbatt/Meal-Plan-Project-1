@@ -1,6 +1,7 @@
 $(document).ready(function(){
     
     var userIngredients = [];
+    var queryIngredients;
 
     var ingredients = {
         meats: ["Chicken", "Pork", "Bacon", "Beef", "Lamb", "Steak", "Turkey", "Fish", "Eggs"],
@@ -17,90 +18,107 @@ $(document).ready(function(){
 
     function displayIngredients() {
         for (var i = 0; i < ingredients.meats.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.meats[i]);
-            ingBtn.text(ingredients.meats[i]);
-            $("#meatColumn").prepend(ingBtn);
+            var ingredientButton = $("<button>");
+            ingredientButton.addClass("ingredient");
+            ingredientButton.addClass("btn btn-lg btn-danger");
+            ingredientButton.attr("id", ingredients.meats[i]);
+            ingredientButton.text(ingredients.meats[i]);
+            $("#meatColumn").prepend(ingredientButton);
         }
 
         for (var i = 0; i < ingredients.dairy.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.dairy[i]);
-            ingBtn.text(ingredients.dairy[i]);
-            $("#dairyColumn").prepend(ingBtn);
+            var ingredientButton = $("<button>");
+            ingredientButton.addClass("ingredient");
+            ingredientButton.addClass("btn btn-lg btn-danger");
+            ingredientButton.attr("id", ingredients.dairy[i]);
+            ingredientButton.text(ingredients.dairy[i]);
+            $("#dairyColumn").prepend(ingredientButton);
         }
 
         for (var i = 0; i < ingredients.veggies.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.veggies[i]);
-            ingBtn.text(ingredients.veggies[i]);
-            $("#veggieColumn").prepend(ingBtn);
+            var ingredientButton = $("<button>");
+            ingredientButton.addClass("ingredient");
+            ingredientButton.addClass("btn btn-lg btn-danger");
+            ingredientButton.attr("id", ingredients.veggies[i]);
+            ingredientButton.text(ingredients.veggies[i]);
+            $("#veggieColumn").prepend(ingredientButton);
         }
 
         for (var i = 0; i < ingredients.fruit.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.fruit[i]);
-            ingBtn.text(ingredients.fruit[i]);
-            $("#fruitColumn").prepend(ingBtn);
+            var ingredientButton = $("<button>");
+            ingredientButton.addClass("ingredient");
+            ingredientButton.addClass("btn btn-lg btn-danger");
+            ingredientButton.attr("id", ingredients.fruit[i]);
+            ingredientButton.text(ingredients.fruit[i]);
+            $("#fruitColumn").prepend(ingredientButton);
         }
 
         for (var i = 0; i < ingredients.pasta.length; i++) {
-            var ingBtn = $("<button>");
-            ingBtn.addClass("ingredient");
-            ingBtn.addClass("btn btn-lg btn-danger");
-            ingBtn.attr("id", ingredients.pasta[i]);
-            ingBtn.text(ingredients.pasta[i]);
-            $("#pastaColumn").prepend(ingBtn);
+            var ingredientButton = $("<button>");
+            ingredientButton.addClass("ingredient");
+            ingredientButton.addClass("btn btn-lg btn-danger");
+            ingredientButton.attr("id", ingredients.pasta[i]);
+            ingredientButton.text(ingredients.pasta[i]);
+            $("#pastaColumn").prepend(ingredientButton);
         }
     }
 
     function userInput(event) {
 
-        var selectedIng = event.target.id;
-        var targetBtn = $(event.target);
-        var indexOfIngredient = userIngredients.indexOf(selectedIng);
+        var selectedIngredient = event.target.id;
+        var targetButton = $(event.target);
+        var indexOfIngredient = userIngredients.indexOf(selectedIngredient);
 
         if (indexOfIngredient >= 0) {
             userIngredients.splice(indexOfIngredient, 1);
             console.log(userIngredients);
-            console.log(selectedIng);
-            targetBtn.removeClass("active");
+            console.log(selectedIngredient);
+            targetButton.removeClass("active");
             return;
         } else {
-            userIngredients.push(selectedIng);
+            userIngredients.push(selectedIngredient);
             console.log(userIngredients);
-            console.log(selectedIng);
-            targetBtn.addClass("active");
+            console.log(selectedIngredient);
+            targetButton.addClass("active");
         }
     }
-    var queryUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + "beef" + "&limitLicense=false&number=3&ranking=2"
 
     function getRecipe() {
+        queryIngredients = userIngredients.toString();
+        queryIngredients = queryIngredients.replace(/\,/g, "%2C");
+        queryIngredients = queryIngredients.replace(/\ /g, "_");
+        var ingredientSearchUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + queryIngredients + "&limitLicense=false&number=3&ranking=2";
+        // potentionalUrls "https://api.edamam.com/search?q=" + ingredients + "&app_id=$026e5f2d&app_key=$f643c47302976108083824e826b3e4d1"
+        // "https://api.edamam.com/api/nutrition-details?app_id=$4313d7cd&app_key=$d3af3a7de5ed75e97f19ca4cea1c7d37" 
+        
+
         var config = {
             beforeSend: function(request) {
-                request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc")
+                request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
             },
             dataType: "json",
-            url: queryUrl,
+            url: ingredientSearchUrl,
             method: "GET",
         }
         $.ajax(config)
         .done(function(response){
+            $("#recipeRow").empty();
+            for (var i = 0; i < response.length; i++) {
+                var recipeCard = $("<div>");
+                var recipeBody = $("<div>");
+                var recipeImage = $("<img>");
+                recipeImage.attr("src", response[i].image);
+                recipeCard.addClass("card");
+                recipeBody.addClass("card-body");
+                recipeBody.append("<h3 class='card-title'>" + response[i].title + "</h3> <h4 class='card-title'> Missing Ingredients: " + response[i].missedIngredientCount + "</h4>")
+                recipeCard.append(recipeImage);
+                recipeCard.append(recipeBody);
+                $("#recipeRow").prepend(recipeCard);
+            }
             console.log(response);
         });
     }
-
-
     displayIngredients();
-    getRecipe();
-
+    $(document).on("click", "#ingredientSearch", getRecipe);
     $(document).on("click", ".ingredient", userInput);
 });
