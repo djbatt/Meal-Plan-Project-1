@@ -1,13 +1,4 @@
 $(document).ready(function(){
-    // functions enables popover
-    $('body').popover({
-        selector: '[data-toggle=popover]',
-        trigger: 'click',
-        html: true,
-        content: function () {
-            return $(this).attr("data-content");
-        }
-    });
     
     var userIngredients = [];
     var queryIngredients;
@@ -21,10 +12,7 @@ $(document).ready(function(){
         pasta: ["Spaghetti", "Penne", "Rigotoni", "BowTie", "Macaroni", "Fetuccine", "Angel Hair", "Rotini", "Lasagna", "Shells", "Linguine", "Orzo", "ziti"],  
       
     }
-
-    // when we click one of the flavor buttons run displayIngredients
-    // now we need to add a check in displayIngredients to display sweet ingrdients if sweet is pressed, and savory ingredients if savory is pressed
-
+    
     function displayIngredients() {
         for (var i = 0; i < ingredients.meats.length; i++) {
             var ingredientButton = $("<button>");
@@ -100,64 +88,24 @@ $(document).ready(function(){
         queryIngredients = queryIngredients.replace(/\,/g, "%2C");
         queryIngredients = queryIngredients.replace(/\ /g, "_");
         var ingredientSearchUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + queryIngredients + "&limitLicense=false&number=3&ranking=2";
-<<<<<<< HEAD
 
         $.ajax({
-=======
-        // potentionalUrls "https://api.edamam.com/search?q=" + ingredients + "&app_id=$026e5f2d&app_key=$f643c47302976108083824e826b3e4d1"
-        // "https://api.edamam.com/api/nutrition-details?app_id=$4313d7cd&app_key=$d3af3a7de5ed75e97f19ca4cea1c7d37" 
-        
-        
-        var config = {
->>>>>>> 07c3df974209fd6c2b3055f7b67216e2d10e56c5
             beforeSend: function(request) {
                 request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
             },
             dataType: "json",
             url: ingredientSearchUrl,
-<<<<<<< HEAD
             method: "GET",
         }).done(function(response){
-=======
-            method: "GET"
-        }
-        
-            
-        
-        $.ajax(config)
-        .done(function(response){
->>>>>>> 07c3df974209fd6c2b3055f7b67216e2d10e56c5
             $("#recipeRow").empty();
 
             for (var i = 0; i < response.length; i++) {
-<<<<<<< HEAD
                 setUpAjaxRequest(
                     response[i], 
                     "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + response[i].id + "/summary"
                 );
-=======
-                var recipeCard = $("<div>");
-                var recipeBody = $("<div>");
-                var recipeImage = $("<img>");
-                var recipePopover = $("<btn>");
-                recipeImage.attr("src", response[i].image);
-                recipeCard.addClass("card");
-                recipeBody.addClass("card-body");
-                recipeBody.append("<h3 class='card-title'>" + response[i].title + "</h3> <h4 class='card-title'> Missing Ingredients: " + response[i].missedIngredientCount + "</h4>")
-                recipeCard.append(recipeImage);
-                recipePopover.attr("data-toggle", "popover");
-                recipePopover.attr("data-content", response[i].recipe);
-                recipePopover.addClass("btn btn-lg btn-danger");
-                recipeBody.append(recipePopover);
-                recipeCard.append(recipeBody);
-                $("#recipeRow").prepend(recipeCard);
->>>>>>> 07c3df974209fd6c2b3055f7b67216e2d10e56c5
             }
         });
-        
-        function showPopover(){ // button remains hidden
-            var unload = [];
-        }
     }
 
     function setUpAjaxRequest (item, summarySearchUrl) {
@@ -191,6 +139,5 @@ $(document).ready(function(){
 
     displayIngredients();
     $(document).on("click", "#ingredientSearch", getRecipe);
-    
     $(document).on("click", ".ingredient", userInput);
 });
