@@ -83,41 +83,63 @@ $(document).ready(function(){
         }
     }
 
+    var summaryArray = [];
+
     function getRecipe() {
+        summaryArray = [];
         queryIngredients = userIngredients.toString();
         queryIngredients = queryIngredients.replace(/\,/g, "%2C");
         queryIngredients = queryIngredients.replace(/\ /g, "_");
         var ingredientSearchUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + queryIngredients + "&limitLicense=false&number=3&ranking=2";
-        // potentionalUrls "https://api.edamam.com/search?q=" + ingredients + "&app_id=$026e5f2d&app_key=$f643c47302976108083824e826b3e4d1"
-        // "https://api.edamam.com/api/nutrition-details?app_id=$4313d7cd&app_key=$d3af3a7de5ed75e97f19ca4cea1c7d37" 
-        
 
-        var config = {
+        $.ajax({
             beforeSend: function(request) {
                 request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
             },
             dataType: "json",
             url: ingredientSearchUrl,
             method: "GET",
-        }
-        $.ajax(config)
-        .done(function(response){
+        }).done(function(response){
             $("#recipeRow").empty();
+
             for (var i = 0; i < response.length; i++) {
-                var recipeCard = $("<div>");
-                var recipeBody = $("<div>");
-                var recipeImage = $("<img>");
-                recipeImage.attr("src", response[i].image);
-                recipeCard.addClass("card");
-                recipeBody.addClass("card-body");
-                recipeBody.append("<h3 class='card-title'>" + response[i].title + "</h3> <h4 class='card-title'> Missing Ingredients: " + response[i].missedIngredientCount + "</h4>")
-                recipeCard.append(recipeImage);
-                recipeCard.append(recipeBody);
-                $("#recipeRow").prepend(recipeCard);
+                setUpAjaxRequest(
+                    response[i], 
+                    "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + response[i].id + "/summary"
+                );
             }
-            console.log(response);
         });
     }
+
+    function setUpAjaxRequest (item, summarySearchUrl) {
+        $.ajax({
+            beforeSend: function(request) {
+                request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
+            },
+            dataType: "json",
+            url: summarySearchUrl,
+            method: "GET",
+        }).then(function(response) {
+            summaryArray.push(response);
+            console.log([...summaryArray]); // create a new array with the elements of summaryArray, spreadOperator
+            
+            var recipeCard = $("<div>")
+                .addClass("card");
+            var recipeBody = $("<div>")
+                .addClass("card-body")
+                .append("<h3 class='card-title'>" + item.title + "</h3> <h4 class='card-title'> Missing Ingredients: " + item.missedIngredientCount + "</h4>")
+                .append("<p>" + response.summary + "</p>");
+            var recipeImage = $("<img>")
+                .attr("src", item.image);
+            
+            recipeCard.append(recipeImage);
+            recipeCard.append(recipeBody);
+            
+            $("#recipeRow").prepend(recipeCard);
+        });
+    }
+    
+
     displayIngredients();
     $(document).on("click", "#ingredientSearch", getRecipe);
     $(document).on("click", ".ingredient", userInput);
