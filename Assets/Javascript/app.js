@@ -100,18 +100,18 @@ $(document).ready(function(){
         // potentionalUrls "https://api.edamam.com/search?q=" + ingredients + "&app_id=$026e5f2d&app_key=$f643c47302976108083824e826b3e4d1"
         // "https://api.edamam.com/api/nutrition-details?app_id=$4313d7cd&app_key=$d3af3a7de5ed75e97f19ca4cea1c7d37" 
         
-        var 
+        
         var config = {
             beforeSend: function(request) {
                 request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
             },
             dataType: "json",
             url: ingredientSearchUrl,
-            method: "GET",
+            method: "GET"
         }
-        var edamamApi = {
+        
             
-        }
+        
         $.ajax(config)
         .done(function(response){
             $("#recipeRow").empty();
