@@ -12,7 +12,7 @@ $(document).ready(function(){
         pasta: ["Spaghetti", "Penne", "Rigotoni", "BowTie", "Macaroni", "Fetuccine", "Angel Hair", "Rotini", "Lasagna", "Shells", "Linguine", "Orzo", "ziti"],  
       
     }
-    
+
     function displayIngredients() {
         for (var i = 0; i < ingredients.meats.length; i++) {
             var ingredientButton = $("<button>");
@@ -87,7 +87,7 @@ $(document).ready(function(){
         queryIngredients = userIngredients.toString();
         queryIngredients = queryIngredients.replace(/\,/g, "%2C");
         queryIngredients = queryIngredients.replace(/\ /g, "_");
-        var ingredientSearchUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + queryIngredients + "&limitLicense=false&number=3&ranking=2";
+        var ingredientSearchUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + queryIngredients + "&limitLicense=false&number=9&ranking=2";
 
         $.ajax({
             beforeSend: function(request) {
@@ -100,7 +100,7 @@ $(document).ready(function(){
             $("#recipeRow").empty();
 
             for (var i = 0; i < response.length; i++) {
-                setUpAjaxRequest(
+                summarySearchAjaxRequest(
                     response[i], 
                     "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + response[i].id + "/summary"
                 );
@@ -108,7 +108,7 @@ $(document).ready(function(){
         });
     }
 
-    function setUpAjaxRequest (item, summarySearchUrl) {
+    function summarySearchAjaxRequest (item, summarySearchUrl) {
         $.ajax({
             beforeSend: function(request) {
                 request.setRequestHeader("X-Mashape-Key", "kDloHrzNNymsh0Q544ArDyN0MZlBp1ry6Kljsn20rs00v3ZUhc");
@@ -119,14 +119,19 @@ $(document).ready(function(){
         }).then(function(response) {
             summaryArray.push(response);
             console.log([...summaryArray]); // create a new array with the elements of summaryArray, spreadOperator
-            
+            var nutritionButton = $("<button>")
+                .addClass("btn btn-lg btn-success")
+                .text("Nutrition");
             var recipeCard = $("<div>")
-                .addClass("card");
+                .addClass("card")
+                .css("width", "33%");
             var recipeBody = $("<div>")
                 .addClass("card-body")
-                .append("<h3 class='card-title'>" + item.title + "</h3> <h4 class='card-title'> Missing Ingredients: " + item.missedIngredientCount + "</h4>")
-                .append("<p>" + response.summary + "</p>");
+                .append("<span class='card-title'>" + item.title + "</span>")
+                .append("<p class='recipeSummary'>" + response.summary + "</p>")
+                .append(nutritionButton);
             var recipeImage = $("<img>")
+                .css("width", "100%")
                 .attr("src", item.image);
             
             recipeCard.append(recipeImage);
@@ -136,8 +141,7 @@ $(document).ready(function(){
         });
     }
     
-
     displayIngredients();
     $(document).on("click", "#ingredientSearch", getRecipe);
     $(document).on("click", ".ingredient", userInput);
-});
+}); 
