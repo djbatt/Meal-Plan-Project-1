@@ -20,19 +20,51 @@
     <br>
     <div class="container wrapper">
         <row class="row">
-            <column class="col-md-12 text-center" id="meatColumn"></column>
-            <column class="col-md-12 text-center" id="dairyColumn"></column>
-            <column class="col-md-12 text-center" id="veggieColumn"></column>
-            <column class="col-md-12 text-center" id="fruitColumn"></column>
-            <column class="col-md-12 text-center" id="pastaColumn"></column>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="ingredientHeader">Meats</span>
+                </div>
+                <div class="panel-body">
+                        <column class="col-md-12 text-center" id="meatColumn"></column>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <span class="ingredientHeader">Vegetables</span>
+                </div>
+                <div class="panel-body">
+                        <column class="col-md-12 text-center" id="veggieColumn"></column>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <span class="ingredientHeader">Dairy</span>
+                </div>
+                <div class="panel-body">
+                        <column class="col-md-12 text-center" id="dairyColumn"></column>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <span class="ingredientHeader">Fruits</span>
+                </div>
+                <div class="panel-body">
+                        <column class="col-md-12 text-center" id="fruitColumn"></column>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="ingredientHeader">Pasta</span>
+                </div>
+                <div class="panel-body">
+                        <column class="col-md-12 text-center" id="pastaColumn"></column>
+                </div>
+            </div>
             <column class="col-md-12 text-center">
                 <button class="btn btn-lg btn-success" id="ingredientSearch">Search</button>
             </column>
         </row>
-        <row class="row flex-row" id="recipeRow">
-          
-
-        </row>
+        <row class="row flex-row" id="recipeRow"></row>
     </div>
 </body>
 </html>
